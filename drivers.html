@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>驱动下载 | CUP Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f0ff;
+            --cyber-purple: #b300ff;
+            --cyber-pink: #ff00f0;
+            --dark-bg: #0a0a1a;
+            --dark-border: rgba(0, 240, 255, 0.2);
+            --light-bg: rgba(20, 20, 40, 0.7);
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-left: 2.5rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--cyber-blue);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .active {
+            color: var(--cyber-blue);
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cyber-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--cyber-blue), transparent);
+            width: 100%;
+            height: 1px;
+            animation: animateLine 6s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes animateLine {
+            0% {
+                transform: translateX(-100%) translateY(random(100) + 0%);
+            }
+            100% {
+                transform: translateX(100%) translateY(random(100) + 0%);
+            }
+        }
+        
+        .page-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: hueShift 8s infinite alternate;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        @keyframes hueShift {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        .page-subtitle {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+        
+        .download-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5% 6rem;
+            position: relative;
+        }
+        
+        .device-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .device-btn {
+            padding: 1rem 2rem;
+            background: var(--light-bg);
+            border: 1px solid var(--dark-border);
+            color: var(--text-light);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .device-btn:hover {
+            color: var(--cyber-blue);
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+        
+        .device-btn.active {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(179, 0, 255, 0.2));
+            color: var(--cyber-blue);
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 20px rgba(179, 0, 255, 0.3);
+        }
+        
+        .device-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .device-btn:hover::before {
+            left: 100%;
+        }
+        
+        .download-section {
+            background: var(--light-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 3rem;
+            border: 1px solid var(--dark-border);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(179, 0, 255, 0.05));
+            z-index: -1;
+        }
+        
+        .os-selector {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dark-border);
+            padding-bottom: 1rem;
+        }
+        
+        .os-tab {
+            padding: 0.8rem 1.5rem;
+            margin-right: 1rem;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        
+        .os-tab:hover {
+            color: var(--text-light);
+            background: rgba(0, 240, 255, 0.1);
+        }
+        
+        .os-tab.active {
+            color: var(--cyber-blue);
+            background: rgba(0, 240, 255, 0.2);
+            border-bottom: 3px solid var(--cyber-blue);
+        }
+        
+        .driver-list {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .driver-list.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .driver-item {
+            background: rgba(10, 10, 30, 0.7);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .driver-item:hover {
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .driver-info h3 {
+            margin: 0 0 0.5rem;
+            color: var(--cyber-blue);
+            font-size: 1.3rem;
+        }
+        
+        .driver-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .driver-version {
+            color: var(--cyber-purple);
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+        
+        .driver-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .driver-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .download-btn {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(179, 0, 255, 0.4);
+        }
+        
+        .download-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .release-notes {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .release-notes:hover {
+            color: var(--cyber-blue);
+        }
+        
+        .no-drivers {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyber-blue), transparent);
+            margin: 4rem 0;
+            opacity: 0.3;
+        }
+        
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .faq-item {
+            background: var(--light-bg);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            border-color: var(--cyber-blue);
+        }
+        
+        .faq-question {
+            color: var(--cyber-blue);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 0 0 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        
+        .faq-toggle {
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+        
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .device-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .os-selector {
+                flex-wrap: wrap;
+            }
+            
+            .os-tab {
+                margin-bottom: 0.5rem;
+            }
+            
+            .driver-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .driver-actions {
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="index.html#about">关于CUP</a></li>
+                    <li><a href="index.html#technology">技术</a></li>
+                    <li><a href="index.html#products">产品</a></li>
+                    <li><a href="history.html">公司历程</a></li>
+                    <li><a href="#" class="active">驱动下载</a></li>
+                    <li><a href="#开源生态.html">开源生态</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="page-header">
+        <div class="cyber-lines" id="cyberLines"></div>
+        <h1 class="page-title">驱动下载</h1>
+        <p class="page-subtitle">获取最新驱动程序，充分发挥您的CUP硬件性能</p>
+    </div>
+    
+    <div class="download-container">
+        <div class="device-selector">
+            <div class="device-btn active" data-device="all">全部产品</div>
+            <div class="device-btn" data-device="m-series">CUP-M系列</div>
+            <div class="device-btn" data-device="d-series">CUP-D系列</div>
+            <div class="device-btn" data-device="s-series">CUP-S系列</div>
+            <div class="device-btn" data-device="dev-kit">开发套件</div>
+        </div>
+        
+        <div class="download-section">
+            <div class="os-selector">
+                <div class="os-tab active" data-os="windows">Windows</div>
+                <div class="os-tab" data-os="macos">macOS</div>
+                <div class="os-tab" data-os="linux">Linux</div>
+                <div class="os-tab" data-os="android">Android</div>
+            </div>
+            
+            <div class="driver-list active" data-os="windows">
+                <div class="driver-item" data-device="m-series">
+                    <div class="driver-info">
+                        <h3>CUP-M1 图形驱动</h3>
+                        <p>为CUP-M1移动处理器优化的图形驱动程序</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v2.3.5</span>
+                        <span class="driver-date">2023-10-15</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+                
+                <div class="driver-item" data-device="d-series">
+                    <div class="driver-info">
+                        <h3>CUP-D5 全功能驱动包</h3>
+                        <p>包含图形、AI加速和电源管理的完整驱动套件</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v3.1.2</span>
+                        <span class="driver-date">2023-11-02</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+                
+                <div class="driver-item" data-device="s-series">
+                    <div class="driver-info">
+                        <h3>CUP-S10 数据中心驱动</h3>
+                        <p>针对服务器环境优化的高性能驱动</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v4.0.8</span>
+                        <span class="driver-date">2023-09-28</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+                
+                <div class="driver-item" data-device="dev-kit">
+                    <div class="driver-info">
+                        <h3>CUP 开发者工具包</h3>
+                        <p>包含SDK、调试工具和模拟器的完整开发环境</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v1.5.3</span>
+                        <span class="driver-date">2023-10-20</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="driver-list" data-os="macos">
+                <div class="driver-item" data-device="m-series">
+                    <div class="driver-info">
+                        <h3>CUP-M1 macOS 驱动</h3>
+                        <p>为macOS系统优化的CUP-M1驱动程序</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v2.2.1</span>
+                        <span class="driver-date">2023-09-15</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+                
+                <div class="driver-item" data-device="d-series">
+                    <div class="driver-info">
+                        <h3>CUP-D5 macOS 驱动</h3>
+                        <p>支持最新macOS版本的桌面级驱动</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v3.0.5</span>
+                        <span class="driver-date">2023-10-10</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="driver-list" data-os="linux">
+                <div class="driver-item" data-device="m-series">
+                    <div class="driver-info">
+                        <h3>CUP-M1 Linux 驱动</h3>
+                        <p>支持Ubuntu、Fedora等主流发行版</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v2.1.8</span>
+                        <span class="driver-date">2023-10-05</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+                
+                <div class="driver-item" data-device="d-series">
+                    <div class="driver-info">
+                        <h3>CUP-D5 Linux 驱动</h3>
+                        <p>包含开源内核模块的完整驱动包</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v3.0.7</span>
+                        <span class="driver-date">2023-11-01</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+                
+                <div class="driver-item" data-device="s-series">
+                    <div class="driver-info">
+                        <h3>CUP-S10 企业版驱动</h3>
+                        <p>针对CentOS、RHEL等企业级Linux优化</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v4.0.5</span>
+                        <span class="driver-date">2023-09-15</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="driver-list" data-os="android">
+                <div class="driver-item" data-device="m-series">
+                    <div class="driver-info">
+                        <h3>CUP-M1 Android 驱动</h3>
+                        <p>支持Android 12及更高版本</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v2.0.4</span>
+                        <span class="driver-date">2023-08-20</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+                
+                <div class="driver-item" data-device="dev-kit">
+                    <div class="driver-info">
+                        <h3>Android NDK 支持包</h3>
+                        <p>为Android开发者提供的CUP优化库</p>
+                    </div>
+                    <div class="driver-meta">
+                        <span class="driver-version">v1.3.2</span>
+                        <span class="driver-date">2023-09-10</span>
+                    </div>
+                    <div class="driver-actions">
+                        <a href="#" class="release-notes">发行说明</a>
+                        <button class="download-btn"><i class="fas fa-download"></i> 下载</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-divider"></div>
+        
+        <div class="faq-section">
+            <h2>常见问题</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>如何确定我需要下载哪个驱动程序？</span>
+                    <i class="fas fa-plus faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>您可以通过以下步骤确定适合的驱动程序：1) 在设备管理器中查看硬件型号；2) 访问我们的自动检测工具网页；3) 参考产品手册中的规格说明。通常，驱动程序会根据您的CUP型号和操作系统自动匹配。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>安装新驱动前需要卸载旧版本吗？</span>
+                    <i class="fas fa-plus faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>对于大多数情况，我们的安装程序会自动处理旧版本驱动的卸载。但为了获得最佳效果，我们建议在安装新驱动前使用"自定义安装"选项中的"执行清洁安装"功能，这会彻底移除旧驱动并安装全新版本。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>驱动程序安装失败怎么办？</span>
+                    <i class="fas fa-plus faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>如果遇到安装失败，请尝试以下步骤：1) 确保下载的驱动版本与您的操作系统版本匹配；2) 暂时禁用杀毒软件；3) 以管理员身份运行安装程序；4) 检查系统日志获取详细错误信息。如果问题依旧，请联系我们的技术支持团队。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Linux驱动是否支持所有发行版？</span>
+                    <i class="fas fa-plus faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>我们的Linux驱动主要针对Ubuntu LTS、Fedora和CentOS/RHEL等主流发行版进行了优化。对于其他发行版，可能需要手动编译内核模块。建议查看发行说明中的"支持系统"部分获取详细信息。</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>如何报告驱动程序问题？</span>
+                    <i class="fas fa-plus faq-toggle"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>您可以通过以下渠道报告问题：1) 在驱动安装界面的"反馈"选项中提交报告；2) 访问我们的开发者论坛；3) 发送邮件至support@cup.tech。请尽可能提供详细的系统信息、问题描述和重现步骤。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 创建赛博朋克线条背景
+        document.addEventListener('DOMContentLoaded', function() {
+            const cyberLines = document.getElementById('cyberLines');
+            const lineCount = 20;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.classList.add('line');
+                line.style.top = Math.random() * 100 + '%';
+                line.style.left = Math.random() * 100 + '%';
+                line.style.width = Math.random() * 100 + 50 + '%';
+                line.style.animationDelay = Math.random() * 5 + 's';
+                line.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                cyberLines.appendChild(line);
+            }
+            
+            // 设备选择器
+            const deviceBtns = document.querySelectorAll('.device-btn');
+            const driverItems = document.querySelectorAll('.driver-item');
+            
+            deviceBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    deviceBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const device = this.dataset.device;
+                    
+                    driverItems.forEach(item => {
+                        if (device === 'all' || item.dataset.device === device) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // 操作系统选择器
+            const osTabs = document.querySelectorAll('.os-tab');
+            const driverLists = document.querySelectorAll('.driver-list');
+            
+            osTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    osTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const os = this.dataset.os;
+                    
+                    driverLists.forEach(list => {
+                        list.classList.remove('active');
+                        if (list.dataset.os === os) {
+                            list.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // FAQ切换
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', function() {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

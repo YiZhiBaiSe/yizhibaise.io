@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公司历程 | CUP Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f0ff;
+            --cyber-purple: #b300ff;
+            --cyber-pink: #ff00f0;
+            --dark-bg: #0a0a1a;
+            --dark-border: rgba(0, 240, 255, 0.2);
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-left: 2.5rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--cyber-blue);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cyber-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--cyber-blue), transparent);
+            width: 100%;
+            height: 1px;
+            animation: animateLine 6s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes animateLine {
+            0% {
+                transform: translateX(-100%) translateY(random(100) + 0%);
+            }
+            100% {
+                transform: translateX(100%) translateY(random(100) + 0%);
+            }
+        }
+        
+        .page-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: hueShift 8s infinite alternate;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        @keyframes hueShift {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        .page-subtitle {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+        
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+            position: relative;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--cyber-blue), var(--cyber-purple));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 1;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            animation-delay: 0.3s;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            animation-delay: 0.6s;
+        }
+        
+        .timeline-content {
+            padding: 2rem;
+            background: rgba(20, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(179, 0, 255, 0.3);
+            border-color: var(--cyber-purple);
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(179, 0, 255, 0.1));
+            z-index: -1;
+        }
+        
+        .timeline-year {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--cyber-blue);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+        
+        .timeline-desc {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--dark-bg);
+            border: 4px solid var(--cyber-blue);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 2;
+            box-shadow: 0 0 10px var(--cyber-blue);
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -12px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -12px;
+        }
+        
+        .invention-section {
+            background: rgba(10, 10, 30, 0.7);
+            padding: 6rem 5%;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--dark-border);
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .invention-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .invention-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.1);
+        }
+        
+        .tech-list {
+            padding-left: 1.5rem;
+        }
+        
+        .tech-list li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .tech-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--cyber-blue);
+            font-size: 0.8rem;
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--cyber-purple);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            color: #ccc;
+            position: relative;
+        }
+        
+        .quote::before {
+            content: '"';
+            position: absolute;
+            font-size: 3rem;
+            color: rgba(179, 0, 255, 0.2);
+            top: -1rem;
+            left: 0.5rem;
+            font-family: serif;
+        }
+        
+        .quote-author {
+            display: block;
+            text-align: right;
+            margin-top: 1rem;
+            color: var(--cyber-blue);
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 21px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="index.html#about">关于CUP</a></li>
+                    <li><a href="index.html#technology">技术</a></li>
+                    <li><a href="index.html#products">产品</a></li>
+                    <li><a href="history.html" class="active">公司历程</a></li>
+                    <li><a href="drivers.html">驱动下载</a></li>
+                    <li><a href="opensource.html">开源生态</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="page-header">
+        <div class="cyber-lines" id="cyberLines"></div>
+        <h1 class="page-title">公司历程</h1>
+        <p class="page-subtitle">从构想到现实，见证计算技术的革命性变革</p>
+    </div>
+    
+    <div class="timeline-container">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2015年</h2>
+                    <p class="timeline-desc">创始人张明远博士在斯坦福大学任教期间，首次提出统一计算架构的概念，认为CPU和GPU的分离设计将成为未来计算的瓶颈。</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2016年</h2>
+                    <p class="timeline-desc">CUP Technologies在硅谷正式成立，获得首轮风险投资500万美元，组建了由芯片设计、计算机架构和AI专家组成的核心团队。</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2017年</h2>
+                    <p class="timeline-desc">公司获得"动态可重构计算单元"基础专利，这一创新设计成为后来CUP架构的核心技术。</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2018年</h2>
+                    <p class="timeline-desc">第一代CUP原型芯片"Phoenix"成功流片，在特定工作负载下展现出比传统CPU+GPU组合高3倍的性能。</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2019年</h2>
+                    <p class="timeline-desc">开发出量子隧穿互联技术，解决了多核CUP芯片间的通信延迟问题，获得"IEEE最佳论文奖"。</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2020年</h2>
+                    <p class="timeline-desc">与多家全球领先的科技公司建立战略合作关系，CUP技术开始应用于数据中心和自动驾驶领域。</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2021年</h2>
+                    <p class="timeline-desc">发布首款商用CUP-M1芯片，用于高端智能手机，性能超越同期旗舰处理器40%，功耗降低35%。</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2022年</h2>
+                    <p class="timeline-desc">CUP架构被《科技评论》评为"十大突破性技术"，公司估值突破100亿美元。</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h2 class="timeline-year">2023年</h2>
+                    <p class="timeline-desc">在上海、慕尼黑和东京设立研发中心，员工总数超过2000人，产品线覆盖移动、桌面和服务器市场。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="invention-section">
+        <div class="cyber-lines"></div>
+        <div class="invention-content">
+            <h2 class="section-title">CUP的发明故事</h2>
+            <p class="invention-text">2015年，当时还在斯坦福大学任教的张明远博士正在研究神经网络加速器。他发现现有的计算架构存在根本性缺陷：CPU擅长串行逻辑处理但并行能力有限，GPU擅长并行计算但控制逻辑简单，数据需要在两者之间频繁搬运，造成巨大能耗和性能损失。</p>
+            
+            <p class="invention-text">在一次深夜实验中，张博士观察到当神经网络层数增加时，数据在CPU和GPU之间的传输时间竟然超过了实际计算时间。这一发现促使他思考：能否设计一种全新的处理器架构，将两种计算模式完美融合？</p>
+            
+            <p class="invention-text">经过18个月的秘密研发，团队解决了三个关键技术难题：</p>
+            <ol class="tech-list">
+                <li><strong>动态可重构计算单元设计</strong>：开发出能根据任务需求自动切换为标量、向量或矩阵运算模式的通用计算单元</li>
+                <li><strong>量子隧穿互连技术</strong>：利用量子效应实现芯片内超高速数据传输，延迟降低至传统互连的1/100</li>
+                <li><strong>统一内存访问架构</strong>：消除CPU和GPU间的内存墙问题，实现真正的零拷贝数据共享</li>
+            </ol>
+            
+            <p class="invention-text">2017年4月的一个凌晨，第一代CUP原型在ImageNet图像识别任务中跑出了惊人的结果：识别准确率与当时顶级GPU相当，但功耗仅为其1/3，体积缩小了60%。团队成员李华回忆道："当我们看到这个结果时，所有人都沉默了——我们知道，计算历史将被改写。"</p>
+            
+            <p class="invention-text">2018年，CUP技术首次公开亮相于国际固态电路会议(ISSCC)，引发了行业震动。英特尔首席工程师评价道："这是自x86架构以来最具颠覆性的创新。"</p>
+            
+            <p class="invention-text">如今，CUP架构已演进到第五代，广泛应用于从智能手机到超级计算机的各个领域。张明远博士在最近一次采访中表示："我们只是揭开了统一计算时代的序幕，未来十年，CUP将使AI计算效率再提升100倍。"</p>
+            
+            <div class="quote">
+                "CUP不是简单的CPU+GPU整合，而是对计算本质的重新思考。它代表着从专用硬件向自适应计算的范式转变。"
+                <span class="quote-author">—— 张明远博士，CUP Technologies创始人兼CTO</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 创建赛博朋克线条背景
+        document.addEventListener('DOMContentLoaded', function() {
+            const cyberLines = document.querySelectorAll('.cyber-lines');
+            const lineCount = 20;
+            
+            cyberLines.forEach(container => {
+                for (let i = 0; i < lineCount; i++) {
+                    const line = document.createElement('div');
+                    line.classList.add('line');
+                    line.style.top = Math.random() * 100 + '%';
+                    line.style.left = Math.random() * 100 + '%';
+                    line.style.width = Math.random() * 100 + 50 + '%';
+                    line.style.animationDelay = Math.random() * 5 + 's';
+                    line.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                    container.appendChild(line);
+                }
+            });
+            
+            // 时间线动画
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+                item.style.animationDelay = (index * 0.2) + 's';
+            });
+        });
+    </script>
+</body>
+</html>

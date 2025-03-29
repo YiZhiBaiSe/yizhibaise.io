@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开源生态 | CUP Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyber-blue: #00f0ff;
+            --cyber-purple: #b300ff;
+            --cyber-pink: #ff00f0;
+            --dark-bg: #0a0a1a;
+            --dark-border: rgba(0, 240, 255, 0.2);
+            --light-bg: rgba(20, 20, 40, 0.7);
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-left: 2.5rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--cyber-blue);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .active {
+            color: var(--cyber-blue);
+        }
+        
+        .page-header {
+            text-align: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cyber-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--cyber-blue), transparent);
+            width: 100%;
+            height: 1px;
+            animation: animateLine 6s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes animateLine {
+            0% {
+                transform: translateX(-100%) translateY(random(100) + 0%);
+            }
+            100% {
+                transform: translateX(100%) translateY(random(100) + 0%);
+            }
+        }
+        
+        .page-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: hueShift 8s infinite alternate;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        @keyframes hueShift {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        .page-subtitle {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+        
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5% 6rem;
+            position: relative;
+        }
+        
+        .section {
+            background: var(--light-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 1px solid var(--dark-border);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(179, 0, 255, 0.05));
+            z-index: -1;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--cyber-blue);
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+        }
+        
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        /* 代码高亮样式 */
+        .code-container {
+            background: #0d1117;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        .code-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(0,240,255,0.05)" stroke-width="0.5" /></svg>');
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .code-filename {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .copy-btn {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--dark-border);
+            color: var(--cyber-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(0, 240, 255, 0.2);
+        }
+        
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .token.comment {
+            color: #6e7681;
+            font-style: italic;
+        }
+        
+        .token.keyword {
+            color: #ff7b72;
+        }
+        
+        .token.function {
+            color: #d2a8ff;
+        }
+        
+        .token.string {
+            color: #a5d6ff;
+        }
+        
+        .token.number {
+            color: #79c0ff;
+        }
+        
+        .token.operator {
+            color: #ff7b72;
+        }
+        
+        .token.punctuation {
+            color: #c9d1d9;
+        }
+        
+        .token.class-name {
+            color: #ffa657;
+        }
+        
+        .token.tag {
+            color: #7ee787;
+        }
+        
+        .token.attr-name {
+            color: #79c0ff;
+        }
+        
+        .token.attr-value {
+            color: #a5d6ff;
+        }
+        
+        /* 开源项目卡片 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .project-card {
+            background: rgba(15, 15, 35, 0.7);
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid var(--dark-border);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
+            border-color: var(--cyber-blue);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--cyber-blue), var(--cyber-purple));
+            transition: height 0.3s;
+        }
+        
+        .project-card:hover::before {
+            height: 100%;
+        }
+        
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--cyber-blue);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .project-desc {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .project-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: var(--cyber-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .project-link:hover {
+            text-shadow: 0 0 10px var(--cyber-blue);
+        }
+        
+        .project-link::after {
+            content: '→';
+            margin-left: 0.5rem;
+            transition: margin-left 0.3s;
+        }
+        
+        .project-link:hover::after {
+            margin-left: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="index.html#about">关于CUP</a></li>
+                    <li><a href="index.html#technology">技术</a></li>
+                    <li><a href="index.html#products">产品</a></li>
+                    <li><a href="history.html">公司历程</a></li>
+                    <li><a href="drivers.html">驱动下载</a></li>
+                    <li><a href="#" class="active">开源生态</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="page-header">
+        <div class="cyber-lines" id="cyberLines"></div>
+        <h1 class="page-title">开源生态</h1>
+        <p class="page-subtitle">共建开放、协作的CUP计算生态体系</p>
+    </div>
+    
+    <div class="content-container">
+        <div class="section">
+            <h2 class="section-title">CUP 开源愿景</h2>
+            <p class="section-text">CUP Technologies 致力于构建开放的硬件生态系统。我们相信，通过开源核心软件栈和工具链，可以加速创新并推动计算技术的民主化。</p>
+            <p class="section-text">我们的开源战略围绕三个核心原则：透明性、互操作性和社区驱动。以下是CUP开源生态的核心架构：</p>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-filename">architecture.cup</span>
+                    <button class="copy-btn">复制代码</button>
+                </div>
+                <pre><code><span class="token comment">// CUP 开源生态架构核心组件</span>
+<span class="token keyword">module</span> <span class="token class-name">CUP_Ecosystem</span> {
+    <span class="token comment">// 硬件抽象层</span>
+    <span class="token keyword">interface</span> <span class="token class-name">HAL</span> {
+        <span class="token function">register_hardware</span>(<span class="token keyword">string</span> device_id);
+        <span class="token function">optimize_performance</span>(<span class="token keyword">int</span> mode);
+    }
+    
+    <span class="token comment">// 统一计算运行时</span>
+    <span class="token keyword">class</span> <span class="token class-name">UnifiedRuntime</span> <span class="token keyword">implements</span> <span class="token class-name">HAL</span> {
+        <span class="token keyword">private</span> <span class="token keyword">const</span> VERSION <span class="token operator">=</span> <span class="token string">"2.0.0"</span>;
+        <span class="token keyword">private</span> <span class="token keyword">array</span> devices;
+        
+        <span class="token keyword">public</span> <span class="token function">__construct</span>() {
+            <span class="token keyword">this</span><span class="token operator">-></span>devices <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>;
+        }
+        
+        <span class="token keyword">public</span> <span class="token function">register_hardware</span>(<span class="token keyword">string</span> device_id) {
+            <span class="token keyword">this</span><span class="token operator">-></span>devices<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> device_id;
+            <span class="token keyword">return</span> <span class="token keyword">true</span>;
+        }
+        
+        <span class="token keyword">public</span> <span class="token function">optimize_performance</span>(<span class="token keyword">int</span> mode <span class="token operator">=</span> <span class="token number">0</span>) {
+            <span class="token keyword">switch</span> (mode) {
+                <span class="token keyword">case</span> <span class="token number">0</span>: <span class="token comment">// 平衡模式</span>
+                    <span class="token keyword">return</span> <span class="token string">"Balanced performance profile applied"</span>;
+                <span class="token keyword">case</span> <span class="token number">1</span>: <span class="token comment">// 高性能模式</span>
+                    <span class="token keyword">return</span> <span class="token string">"High performance mode activated"</span>;
+                <span class="token keyword">case</span> <span class="token number">2</span>: <span class="token comment">// 节能模式</span>
+                    <span class="token keyword">return</span> <span class="token string">"Power saving optimization enabled"</span>;
+            }
+        }
+    }
+    
+    <span class="token comment">// AI加速引擎</span>
+    <span class="token keyword">trait</span> <span class="token class-name">AI_Accelerator</span> {
+        <span class="token keyword">public</span> <span class="token function">load_model</span>(<span class="token keyword">string</span> model_path) {
+            <span class="token keyword">if</span> (<span class="token operator">!</span><span class="token function">file_exists</span>(model_path)) {
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Exception</span>(<span class="token string">"Model file not found"</span>);
+            }
+            <span class="token keyword">return</span> <span class="token string">"Model loaded into CUP AI engine"</span>;
+        }
+        
+        <span class="token keyword">public</span> <span class="token function">infer</span>(<span class="token keyword">array</span> input_data) {
+            <span class="token comment">// 使用量子加速矩阵运算</span>
+            <span class="token keyword">return</span> <span class="token function">quantum_matrix_multiply</span>(input_data);
+        }
+    }
+    
+    <span class="token comment">// 开发者工具包</span>
+    <span class="token keyword">class</span> <span class="token class-name">DevKit</span> {
+        <span class="token keyword">use</span> <span class="token class-name">AI_Accelerator</span>;
+        
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token function">compile</span>(<span class="token keyword">string</span> source_code) {
+            <span class="token keyword">try</span> {
+                <span class="token keyword">string</span> optimized <span class="token operator">=</span> <span class="token function">cup_optimizer</span>(source_code);
+                <span class="token keyword">return</span> <span class="token function">generate_binary</span>(optimized);
+            } <span class="token keyword">catch</span> (<span class="token class-name">Exception</span> <span class="token variable">$e</span>) {
+                <span class="token keyword">return</span> <span class="token string">"Compilation failed: "</span> <span class="token operator">.</span> <span class="token variable">$e</span><span class="token operator">-></span><span class="token function">getMessage</span>();
+            }
+        }
+    }
+}</code></pre>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">核心开源项目</h2>
+            <p class="section-text">CUP开源生态由多个关键项目组成，每个项目都针对特定领域的计算挑战提供解决方案。</p>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3 class="project-title">CUP-RT</h3>
+                    <p class="project-desc">统一计算运行时环境，提供跨平台的硬件抽象和性能优化接口。</p>
+                    <div class="project-meta">
+                        <span>版本: 2.3.1</span>
+                        <span>许可证: Apache 2.0</span>
+                    </div>
+                    <a href="#" class="project-link">访问仓库</a>
+                </div>
+                
+                <div class="project-card">
+                    <h3 class="project-title">QuantumLink</h3>
+                    <p class="project-desc">量子隧穿互连技术的开源实现，用于CUP芯片间高速通信。</p>
+                    <div class="project-meta">
+                        <span>版本: 1.8.0</span>
+                        <span>许可证: GPLv3</span>
+                    </div>
+                    <a href="#" class="project-link">访问仓库</a>
+                </div>
+                
+                <div class="project-card">
+                    <h3 class="project-title">NeuroForge</h3>
+                    <p class="project-desc">基于CUP架构的神经网络编译器，支持动态自适应计算。</p>
+                    <div class="project-meta">
+                        <span>版本: 0.9.5</span>
+                        <span>许可证: MIT</span>
+                    </div>
+                    <a href="#" class="project-link">访问仓库</a>
+                </div>
+                
+                <div class="project-card">
+                    <h3 class="project-title">CUP-LLVM</h3>
+                    <p class="project-desc">LLVM后端支持，为CUP架构提供完整的编译器工具链。</p>
+                    <div class="project-meta">
+                        <span>版本: 3.0.0</span>
+                        <span>许可证: Apache 2.0</span>
+                    </div>
+                    <a href="#" class="project-link">访问仓库</a>
+                </div>
+                
+                <div class="project-card">
+                    <h3 class="project-title">OpenCUP</h3>
+                    <p class="project-desc">CUP指令集架构的开放规范文档和参考实现。</p>
+                    <div class="project-meta">
+                        <span>版本: 1.0.0</span>
+                        <span>许可证: BSD-3</span>
+                    </div>
+                    <a href="#" class="project-link">访问仓库</a>
+                </div>
+                
+                <div class="project-card">
+                    <h3 class="project-title">CUP-Visor</h3>
+                    <p class="project-desc">轻量级虚拟化管理程序，支持CUP特有的资源调度特性。</p>
+                    <div class="project-meta">
+                        <span>版本: 0.5.2</span>
+                        <span>许可证: AGPLv3</span>
+                    </div>
+                    <a href="#" class="project-link">访问仓库</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">贡献指南</h2>
+            <p class="section-text">我们欢迎所有开发者参与CUP开源生态的建设。以下是贡献代码的基本流程：</p>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-filename">CONTRIBUTING.md</span>
+                    <button class="copy-btn">复制代码</button>
+                </div>
+                <pre><code><span class="token comment"># CUP 开源项目贡献指南</span>
+
+<span class="token comment">## 1. 设置开发环境</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>code</span><span class="token punctuation">></span></span><span class="token keyword">git</span> clone https://github.com/cup-tech/cup-rt.git
+<span class="token keyword">cd</span> cup-rt
+<span class="token keyword">./configure</span> <span class="token operator">--</span>with<span class="token operator">-</span>cup<span class="token operator">=</span>/path/to/cup/sdk
+<span class="token keyword">make</span> <span class="token operator">&&</span> <span class="token keyword">make</span> test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>code</span><span class="token punctuation">></span></span>
+
+<span class="token comment">## 2. 提交Pull Request</span>
+<span class="token operator">-</span> Fork官方仓库到您的GitHub账户
+<span class="token operator">-</span> 创建特性分支: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>code</span><span class="token punctuation">></span></span><span class="token keyword">git</span> checkout <span class="token operator">-</span>b feature<span class="token operator">/</span>your<span class="token operator">-</span>feature<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>code</span><span class="token punctuation">></span></span>
+<span class="token operator">-</span> 提交更改并推送到您的fork
+<span class="token operator">-</span> 在GitHub上创建Pull Request
+
+<span class="token comment">## 3. 代码规范</span>
+<span class="token operator">-</span> 遵循项目现有的代码风格
+<span class="token operator">-</span> 为新增功能编写单元测试
+<span class="token operator">-</span> 更新相关文档
+<span class="token operator">-</span> 确保代码通过所有CI测试
+
+<span class="token comment">## 4. 社区交流</span>
+<span class="token operator">-</span> 加入我们的Discord: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>token attr-value<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>https://discord.gg/cup-tech<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+<span class="token operator">-</span> 参与月度开发者会议
+<span class="token operator">-</span> 在GitHub Discussions提问和讨论</code></pre>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 创建赛博朋克线条背景
+        document.addEventListener('DOMContentLoaded', function() {
+            const cyberLines = document.getElementById('cyberLines');
+            const lineCount = 20;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.classList.add('line');
+                line.style.top = Math.random() * 100 + '%';
+                line.style.left = Math.random() * 100 + '%';
+                line.style.width = Math.random() * 100 + 50 + '%';
+                line.style.animationDelay = Math.random() * 5 + 's';
+                line.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                cyberLines.appendChild(line);
+            }
+            
+            // 复制代码功能
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.parentElement.nextElementSibling;
+                    const range = document.createRange();
+                    range.selectNode(codeBlock);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(range);
+                    document.execCommand('copy');
+                    window.getSelection().removeAllRanges();
+                    
+                    const originalText = this.textContent;
+                    this.textContent = '已复制!';
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

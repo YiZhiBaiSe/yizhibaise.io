@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUP - 计算统一处理器 | 下一代计算技术</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #0a0a1a;
+            --accent: #b300ff;
+            --light: rgba(15, 15, 35, 0.8);
+            --dark: #0a0a1a;
+            --cyber-blue: #00f0ff;
+            --cyber-purple: #b300ff;
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+        
+        body {
+            font-family: 'Rajdhani', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-light);
+            line-height: 1.6;
+            background-color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* 赛博线条背景 */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+        }
+        
+        .cyber-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--cyber-blue), transparent);
+            width: 100%;
+            height: 1px;
+            animation: animateLine 6s linear infinite;
+            opacity: 0.1;
+        }
+        
+        @keyframes animateLine {
+            0% {
+                transform: translateX(-100%) translateY(calc(var(--random) * 1%));
+            }
+            100% {
+                transform: translateX(100%) translateY(calc(var(--random) * 1%));
+            }
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-left: 2.5rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        nav ul li a:hover {
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px var(--cyber-blue);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            position: relative;
+            color: white;
+            padding: 15vh 5% 10vh;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+        
+        .cup-title {
+            font-size: 6rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: hueShift 8s infinite alternate;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+        
+        @keyframes hueShift {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        .cup-title::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            bottom: -10px;
+            left: 0;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: expandLine 2s 1s forwards;
+        }
+        
+        @keyframes expandLine {
+            to {
+                transform: scaleX(1);
+            }
+        }
+        
+        .hero p {
+            font-size: 1.8rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            animation: fadeIn 1s 1.5s forwards;
+            line-height: 1.8;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 1s 2s forwards;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(179, 0, 255, 0.5);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        /* 内容区域 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 5%;
+            position: relative;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5%;
+            right: 5%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyber-blue), transparent);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--cyber-blue);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+        }
+        
+        .section-title p {
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        /* 特性卡片 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 240, 255, 0.2);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--cyber-blue), var(--cyber-purple));
+            transition: height 0.3s;
+        }
+        
+        .feature-card:hover::before {
+            height: 100%;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--cyber-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .feature-card p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        
+        /* 技术规格 */
+        .tech-specs {
+            background: rgba(0, 0, 0, 0.3);
+            position: relative;
+            padding: 6rem 5%;
+            margin: 6rem 0;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+        }
+        
+        .tech-specs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 65%, rgba(0, 240, 255, 0.03) 100%);
+            pointer-events: none;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .spec-item {
+            background: rgba(15, 15, 35, 0.6);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .spec-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(179, 0, 255, 0.05));
+            z-index: -1;
+        }
+        
+        .spec-item h3 {
+            color: var(--cyber-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .spec-item h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyber-blue), transparent);
+        }
+        
+        .spec-item ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .spec-item ul li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            font-size: 1.1rem;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+        
+        .spec-item ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--cyber-blue);
+        }
+        
+        .spec-item ul li:last-child {
+            border-bottom: none;
+        }
+        
+        /* 产品展示 */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+        
+        .product-card {
+            background: var(--light);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 240, 255, 0.2);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, #0f0f23, #1a1a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 65%, rgba(0, 240, 255, 0.05) 100%);
+        }
+        
+        .product-info {
+            padding: 2rem;
+        }
+        
+        .product-info h3 {
+            margin-top: 0;
+            color: var(--text-light);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-info p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .product-info .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--cyber-blue);
+            margin: 1.5rem 0;
+        }
+        
+        /* 新闻订阅 */
+        .newsletter {
+            background: linear-gradient(135deg, #0a0a1a, #1a1a3a);
+            color: white;
+            text-align: center;
+            padding: 6rem 5%;
+            margin-top: 6rem;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+        }
+        
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(0,240,255,0.05)" stroke-width="0.5" /></svg>');
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+        
+        .newsletter h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .newsletter h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 25%;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+        }
+        
+        .newsletter p {
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 1.1rem 1.5rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1.1rem;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-right: none;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .newsletter-form button {
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple));
+            color: white;
+            border: none;
+            padding: 0 3rem;
+            border-radius: 0 50px 50px 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background: linear-gradient(90deg, var(--cyber-purple), var(--cyber-blue));
+        }
+        
+        /* 页脚 */
+        footer {
+            background: #0a0a1a;
+            color: white;
+            padding: 5rem 5% 3rem;
+            position: relative;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(0,240,255,0.05)" stroke-width="0.5" /></svg>');
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .footer-column h3 {
+            color: var(--cyber-blue);
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyber-blue), transparent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-column ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--cyber-blue);
+            text-shadow: 0 0 5px var(--cyber-blue);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background: rgba(0, 240, 255, 0.1);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+        
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--cyber-blue), var(--cyber-purple));
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--cyber-blue);
+            border-color: transparent;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 1rem;
+            position: relative;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 1rem;
+            }
+            
+            .hero {
+                padding: 10vh 5%;
+            }
+            
+            .cup-title {
+                font-size: 4rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                border-radius: 50px;
+                margin-bottom: 1rem;
+                border-right: 1px solid rgba(0, 240, 255, 0.3);
+            }
+            
+            .newsletter-form button {
+                border-radius: 50px;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg" id="cyberBg"></div>
+    
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <!-- Logo已移除 -->
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#about">关于CUP</a></li>
+                    <li><a href="#technology">技术</a></li>
+                    <li><a href="#products">产品</a></li>
+                    <li><a href="#developers">开发者</a></li>
+                    <li><a href="history.html">公司历程</a></li>
+                    <li><a href="drivers.html">驱动下载</a></li>
+                    <li><a href="opensource.html">开源生态</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <h1 class="cup-title">CUP</h1>
+        <p>革命性的CUP技术，将CPU和GPU的功能完美融合，为下一代计算提供前所未有的性能和效率</p>
+        <a href="#products" class="btn">探索产品</a>
+    </section>
+    
+    <section id="about" class="container">
+        <div class="section-title">
+            <h2>为什么选择CUP?</h2>
+            <p>CUP技术通过创新的架构设计，消除了传统CPU和GPU之间的性能瓶颈，实现了真正的统一计算</p>
+        </div>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>突破性性能</h3>
+                <p>CUP采用独特的混合架构，在处理通用计算和图形计算时都能提供卓越性能，比传统CPU+GPU组合快达5倍</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔋</div>
+                <h3>超高能效</h3>
+                <p>我们的专利电源管理技术使CUP在相同性能下能耗降低60%，为移动设备和数据中心带来革命性改变</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>智能架构</h3>
+                <p>CUP内置AI加速引擎，能够动态分配计算资源，自动优化工作负载，无需开发者手动调整</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="technology" class="tech-specs">
+        <div class="container">
+            <div class="section-title">
+                <h2>核心技术</h2>
+                <p>CUP的创新技术正在重新定义计算的未来</p>
+            </div>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <h3>统一计算架构</h3>
+                    <ul>
+                        <li>动态资源分配技术</li>
+                        <li>无瓶颈数据通道</li>
+                        <li>统一内存空间</li>
+                        <li>自适应计算单元</li>
+                    </ul>
+                </div>
+                <div class="spec-item">
+                    <h3>量子互联技术</h3>
+                    <ul>
+                        <li>超低延迟核心间通信</li>
+                        <li>量子隧穿数据传输</li>
+                        <li>自修复数据链路</li>
+                        <li>可扩展互联架构</li>
+                    </ul>
+                </div>
+                <div class="spec-item">
+                    <h3>神经形态计算</h3>
+                    <ul>
+                        <li>类脑计算单元</li>
+                        <li>实时学习能力</li>
+                        <li>自适应神经网络</li>
+                        <li>脉冲神经网络支持</li>
+                    </ul>
+                </div>
+                <div class="spec-item">
+                    <h3>先进制程技术</h3>
+                    <ul>
+                        <li>3nm FinFET+工艺</li>
+                        <li>3D堆叠设计</li>
+                        <li>碳纳米管互连</li>
+                        <li>自冷却结构</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="products" class="container">
+        <div class="section-title">
+            <h2>CUP产品系列</h2>
+            <p>我们提供全系列的CUP产品，满足从移动设备到超级计算机的各种需求</p>
+        </div>
+        <div class="products">
+            <div class="product-card">
+                <div class="product-image">CUP-M1 移动版</div>
+                <div class="product-info">
+                    <h3>CUP-M1</h3>
+                    <p>专为智能手机和平板电脑设计的超高效CUP，提供桌面级性能</p>
+                    <div class="price">¥1,299起</div>
+                    <a href="#" class="btn">了解更多</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">CUP-D5 桌面版</div>
+                <div class="product-info">
+                    <h3>CUP-D5</h3>
+                    <p>为游戏玩家和创作者打造的高性能CUP，无需独立显卡</p>
+                    <div class="price">¥3,999起</div>
+                    <a href="#" class="btn">了解更多</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">CUP-S10 服务器版</div>
+                <div class="product-info">
+                    <h3>CUP-S10</h3>
+                    <p>数据中心级CUP，提供前所未有的计算密度和能效比</p>
+                    <div class="price">¥12,999起</div>
+                    <a href="#" class="btn">了解更多</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="newsletter">
+        <h2>订阅CUP新闻</h2>
+        <p>获取最新的产品发布、技术突破和特别优惠信息</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="输入您的邮箱地址">
+            <button type="submit">订阅</button>
+        </form>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>产品</h3>
+                <ul>
+                    <li><a href="#">CUP-M系列</a></li>
+                    <li><a href="#">CUP-D系列</a></li>
+                    <li><a href="#">CUP-S系列</a></li>
+                    <li><a href="#">开发套件</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>技术</h3>
+                <ul>
+                    <li><a href="#">架构白皮书</a></li>
+                    <li><a href="#">性能基准</a></li>
+                    <li><a href="#">开发者文档</a></li>
+                    <li><a href="#">专利技术</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>支持</h3>
+                <ul>
+                    <li><a href="#">常见问题</a></li>
+                    <li><a href="#">驱动下载</a></li>
+                    <li><a href="#">技术支持</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>公司</h3>
+                <ul>
+                    <li><a href="history.html">关于我们</a></li>
+                    <li><a href="#">新闻中心</a></li>
+                    <li><a href="#">投资者关系</a></li>
+                    <li><a href="#">加入我们</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="#">微</a>
+                    <a href="#">微</a>
+                    <a href="#">知</a>
+                    <a href="#">B</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2023 CUP Technologies. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script>
+        // 创建赛博朋克线条背景
+        document.addEventListener('DOMContentLoaded', function() {
+            const cyberBg = document.getElementById('cyberBg');
+            const lineCount = 30;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.classList.add('cyber-line');
+                line.style.setProperty('--random', Math.random() * 100);
+                line.style.top = Math.random() * 100 + '%';
+                line.style.left = Math.random() * 100 + '%';
+                line.style.width = Math.random() * 100 + 50 + '%';
+                line.style.animationDelay = Math.random() * 5 + 's';
+                line.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                cyberBg.appendChild(line);
+            }
+        });
+    </script>
+</body>
+</html>
