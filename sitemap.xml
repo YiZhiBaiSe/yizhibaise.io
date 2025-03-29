@@ -1,63 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- 首页（最高优先级） -->
-  <url>
-    <loc>https://www.cup-tech.com/</loc>
-    <lastmod>2023-11-20T08:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <!-- 核心产品页 -->
-  <url>
-    <loc>https://www.cup-tech.com/products/cup-m1</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- 技术文档（带视频标记） -->
-  <url>
-    <loc>https://www.cup-tech.com/technology/quantum-tunneling</loc>
-    <lastmod>2023-11-18</lastmod>
-    <video:video>
-      <video:thumbnail_loc>https://www.cup-tech.com/videos/quantum-thumb.jpg</video:thumbnail_loc>
-      <video:title>量子隧穿技术演示</video:title>
-      <video:description>展示CUP-M1芯片的纳米级互联层</video:description>
-    </video:video>
-  </url>
-
-  <!-- 白皮书下载 -->
-  <url>
-    <loc>https://www.cup-tech.com/whitepapers/unified-architecture</loc>
-    <lastmod>2023-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-
-  <!-- 新闻动态（Google News支持） -->
-  <url>
-    <loc>https://www.cup-tech.com/news/isscc-2023</loc>
-    <news:news>
-      <news:publication>
-        <news:name>CUP Technologies</news:name>
-        <news:language>zh</news:language>
-      </news:publication>
-      <news:publication_date>2023-11-10</news:publication_date>
-      <news:title>ISSCC 2023发布新一代CUP架构</news:title>
-    </news:news>
-  </url>
-
-  <!-- 开发者资源 -->
-  <url>
-    <loc>https://www.cup-tech.com/developers/sdk</loc>
-    <lastmod>2023-11-05</lastmod>
-    <changefreq>weekly</changefreq>
-  </url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/index.html</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/history.html</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/drivers.html</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/opensource.html</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/#about</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/#technology</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/#products</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://yizhibaise.github.io/yizhibaise.io/#developers</loc>
+        <lastmod>2025-3-29</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>
