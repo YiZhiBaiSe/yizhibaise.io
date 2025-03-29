@@ -1,57 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/index.html</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/history.html</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/drivers.html</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/opensource.html</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/#about</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/#technology</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/#products</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://yizhibaise.github.io/yizhibaise.io/#developers</loc>
-        <lastmod>2025-3-29</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+
+<url>
+ <loc>https://yizhibaise.github.io/yizhibaise.io/history.html</loc>
+ <priority>0.3</priority>
+ <lastmod>2025-03-29</lastmod>
+ <changefreq>always</changefreq>
+</url>
+
+<url>
+ <loc>https://yizhibaise.github.io/yizhibaise.io/drivers.html</loc>
+ <priority>0.3</priority>
+ <lastmod>2025-03-29</lastmod>
+ <changefreq>always</changefreq>
+</url>
+
+<url>
+ <loc>https://yizhibaise.github.io/yizhibaise.io/opensource.html</loc>
+ <priority>0.3</priority>
+ <lastmod>2025-03-29</lastmod>
+ <changefreq>always</changefreq>
+</url>
+
+<url>
+ <loc>https://yizhibaise.github.io/yizhibaise.io/</loc>
+ <priority>0.3</priority>
+ <lastmod>2025-03-29</lastmod>
+ <changefreq>always</changefreq>
+</url>
+
 </urlset>
